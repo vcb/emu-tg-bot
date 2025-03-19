@@ -16,7 +16,10 @@ logging.getLogger('tuya_util').setLevel(logging.DEBUG)
 load_dotenv()
 device = TuyaSensor(ip=os.getenv('DEVICE_IP'),
                     dev_id=os.getenv('DEVICE_ID'),
-                    local_key=os.getenv('DEVICE_KEY'))
+                    local_key=os.getenv('DEVICE_KEY'),
+                    api_key=os.getenv('API_KEY'),
+                    api_secret=os.getenv('API_SECRET'))
+
 logging.info('Initialized Tuya sensor.')
 
 # Sticker IDs
@@ -38,7 +41,6 @@ async def door_status(update: Update, context: CallbackContext):
 def main():
     app = ApplicationBuilder().token(os.getenv('TG_KEY')).build()
 
-    device.connect()
     logging.info("Connected to Tuya device.")
 
     app.add_handler(CommandHandler(['start', 'help'], start))
